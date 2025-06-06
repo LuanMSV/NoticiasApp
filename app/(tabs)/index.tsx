@@ -1,11 +1,11 @@
 // Importando os componentes necessários do React Native
-import { StyleSheet, FlatList, ActivityIndicator, View, Text, Image, TextInput, TouchableOpacity, ScrollView, Modal, Pressable, Animated } from 'react-native';
+import { ActivityIndicator, Animated, FlatList, Image, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 // Importando hooks do React para gerenciamento de estado e efeitos
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 // Importando axios para fazer requisições HTTP
+import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useRouter } from 'expo-router'; // Importando useRouter
-import { Ionicons } from '@expo/vector-icons';
 import { useFavorites } from '../../context/FavoritesContext';
 
 // Interface que define a estrutura de cada item de notícia
@@ -364,207 +364,162 @@ export default function HomeScreen() {
   );
 }
 
-// Estilos do componente
 const styles = StyleSheet.create({
-  // Container principal
-  container: {
+  container: { // estilo do container principal
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  // Container do loading
-  loadingContainer: {
+  loadingContainer: { // indicador de carregamento
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // Estilo da lista de notícias
-  newsList: {
+  newsList: { // container da lista de notícias
     padding: 16,
   },
-  // Estilo de cada item de notícia
-  newsItem: {
+  newsItem: { // item de notícia
     backgroundColor: '#dddddd',
     marginBottom: 16,
     padding: 16,
     borderRadius: 8,
     elevation: 2,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     transform: [{ scale: 1 }],
   },
-  newsItemPressed: {
+  newsItemPressed: { // estilo quando o item é pressionado
     backgroundColor: '#cccccc',
     transform: [{ scale: 0.98 }],
     opacity: 0.8,
   },
-  newsContent: {
+  newsContent: { // conteúdo interno do item
     flex: 1,
   },
-  imageContainer: {
+  imageContainer: { // container da imagem
     position: 'relative',
     marginBottom: 8,
   },
-  newsImage: {
+  newsImage: { // imagem da notícia
     width: '100%',
     height: 200,
     borderRadius: 8,
   },
-  // Estilo do título da notícia
-  title: {
+  title: { // título da notícia
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  // Estilo da descrição da notícia
-  description: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 12,
+  sourceText: { // fonte da notícia
+    fontSize: 12,
+    color: '#888',
   },
-  // Container para fonte e data na mesma linha
-  bottomInfoContainer: {
-    flexDirection: 'row', // Coloca os itens lado a lado
-    justifyContent: 'space-between', // Alinha um na esquerda e outro na direita
-    alignItems: 'center', // Centraliza verticalmente
-    marginTop: 8, // Espaçamento do conteúdo acima
+  dateText: { // data da notícia
+    fontSize: 12,
+    color: '#888',
   },
-  // Estilo da fonte/autor
-  sourceText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#2c5282',
-    fontStyle: 'italic',
-    // margin direita não é necessário com space-between
+  bottomInfoContainer: { // container inferior da notícia
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  // Estilo da data de publicação
-  dateText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#333',
-    // alinhamento e margin topo não são necessários com o container
-  },
-  // Estilo para o campo de busca
-  searchInput: {
-    flex: 1,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    marginRight: 8,
-  },
-  // Estilo para o título do aplicativo
-  titleContainer: {
-    alignItems: 'center',
-    marginTop: 16,
-    marginBottom: 8,
-  },
-  appTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#3498db',
-    textShadowColor: 'rgba(0, 0, 0, 0.1)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-  },
-  favoriteButton: {
+  favoriteButton: { // botão de favorito sobre a imagem
     position: 'absolute',
     top: 8,
     right: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: '#fff',
     borderRadius: 20,
-    padding: 8,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    marginTop: 32,
-    marginBottom: 8,
-  },
-  filterButton: {
-    padding: 8,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
-  },
-  currentFilterContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 16,
-    marginBottom: 8,
-  },
-  currentFilterText: {
-    fontSize: 14,
-    color: '#666',
-    marginRight: 8,
-  },
-  clearFilterButton: {
     padding: 4,
   },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    maxHeight: '80%',
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  titleContainer: { // container do título do app
     alignItems: 'center',
-    marginBottom: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    paddingBottom: 15,
+    marginVertical: 16,
   },
-  modalTitle: {
-    fontSize: 20,
+  appTitle: { // título do app
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#3498db',
   },
-  closeButton: {
+  searchContainer: { // container da barra de busca
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  searchInput: { // campo de texto da busca
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
     padding: 8,
+    backgroundColor: '#fff',
   },
-  modalBody: {
-    maxHeight: '80%',
+  searchButton: { // botão de buscar
+    marginLeft: 8,
   },
-  categoryOption: {
+  clearButton: { // botão de limpar texto
+    marginLeft: 8,
+  },
+  filterButton: { // botão de filtro
+    marginLeft: 8,
+  },
+  currentFilterContainer: { // container de categoria ativa
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    marginVertical: 8,
+  },
+  currentFilterText: { // texto da categoria ativa
+    fontSize: 14,
+    marginRight: 8,
+  },
+  clearFilterButton: { // botão para limpar categoria
+    padding: 4,
+  },
+  modalOverlay: { // fundo do modal
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+  },
+  modalContent: { // conteúdo do modal
+    backgroundColor: '#fff',
+    padding: 16,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    maxHeight: '50%',
+  },
+  modalHeader: { // cabeçalho do modal
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
+    marginBottom: 8,
+  },
+  modalTitle: { // título do modal
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  closeButton: { // botão de fechar o modal
+    padding: 4,
+  },
+  modalBody: { // corpo (scrollview) do modal
+    paddingVertical: 8,
+  },
+  categoryOption: { // botão de categoria
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderColor: '#eee',
   },
-  categoryOptionSelected: {
-    backgroundColor: '#f8f9fa',
+  categoryOptionSelected: { // estilo quando categoria está selecionada
+    backgroundColor: '#eaf4fc',
   },
-  categoryOptionText: {
+  categoryOptionText: { // texto da categoria
     fontSize: 16,
-    color: '#333',
   },
-  categoryOptionTextSelected: {
+  categoryOptionTextSelected: { // texto da categoria selecionada
     color: '#3498db',
     fontWeight: 'bold',
-  },
-  searchButton: {
-    padding: 8,
-    marginRight: 8,
-  },
-  clearButton: {
-    padding: 8,
-    marginRight: 8,
   },
 });
