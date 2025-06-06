@@ -1,50 +1,124 @@
-# Welcome to your Expo app 👋
+# NoticiasApp
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicativo de notícias desenvolvido com React Native e Expo.
 
-## Get started
 
-1. Install dependencies
+## 🚀 Funcionalidades
 
-   ```bash
-   npm install
-   ```
+### 1. Listagem de Notícias
+- Exibição de notícias em cards
+- Imagem destacada
+- Título e fonte
+- Data de publicação
+- Efeito de pressão nos cards
 
-2. Start the app
+### 2. Sistema de Favoritos
+- Adicionar/remover notícias dos favoritos
+- Persistência local com AsyncStorage
+- Indicador visual de status
+- Lista dedicada de favoritos
 
-   ```bash
-   npx expo start
-   ```
+### 3. Filtros e Busca
+- Busca por texto
+- Filtro por categorias
+- Interface modal para seleção de categorias
+- Limpeza de filtros
 
-In the output, you'll find options to open the app in a
+### 4. Detalhes da Notícia
+- Visualização completa da notícia
+- Imagem em destaque
+- Link para matéria original
+- Layout otimizado para leitura
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🛠️ Tecnologias Utilizadas
 
-## Get a fresh project
+- **React Native**: Framework principal
+- **Expo**: Plataforma de desenvolvimento
+- **TypeScript**: Tipagem estática
+- **Axios**: Requisições HTTP
+- **AsyncStorage**: Armazenamento local
+- **Expo Router**: Navegação
+- **Vector Icons**: Ícones
 
-When you're ready, run:
 
+## 💻 Instalação
+
+1. Clone o repositório:
 ```bash
-npm run reset-project
+git clone https://github.com/seu-usuario/NoticiasApp.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Instale as dependências:
+```bash
+cd NoticiasApp
+npm install
+```
 
-## Learn more
+3. Configure as variáveis de ambiente:
+```bash
+cp .env.example .env
+```
+Edite o arquivo `.env` com suas configurações.
 
-To learn more about developing your project with Expo, look at the following resources:
+4. Inicie o projeto:
+```bash
+npm start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🎯 Uso
 
-## Join the community
+1. **Lista de Notícias**
+   - Role para ver mais notícias
+   - Toque em uma notícia para ver detalhes
+   - Use o botão de estrela para favoritar
 
-Join our community of developers creating universal apps.
+2. **Busca e Filtros**
+   - Digite na barra de busca
+   - Use o botão de filtro para categorias
+   - Limpe os filtros com o botão X
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+3. **Favoritos**
+   - Acesse a aba de favoritos
+   - Gerencie suas notícias salvas
+   - Remova favoritos deslizando
+
+
+## 🎯 Decisões Técnicas
+
+### 1. Escolha do Framework e Plataforma
+- **React Native + Expo**: Escolhido pela facilidade de desenvolvimento multiplataforma
+- **TypeScript**: Implementado para garantir tipagem estática e melhor manutenibilidade
+- **Expo Router**: Adotado para gerenciamento de rotas com suporte nativo
+
+### 2. Gerenciamento de Estado
+- **Context API**: Utilizado para gerenciar estado global (favoritos) por ser nativo e adequado para o escopo
+- **Estado Local**: Implementado para estados específicos de componentes
+- **AsyncStorage**: Escolhido para persistência local por ser simples e eficiente para o caso de uso
+
+### 3. Padrões de Arquitetura
+- **Clean Architecture**: Adotada para separar responsabilidades e facilitar testes
+- **Repository Pattern**: Implementado para abstrair a fonte de dados
+
+### 4. Performance
+- **FlatList**: Escolhida para renderização eficiente de listas longas
+- **Memoização**: Implementada em componentes para evitar re-renders desnecessários
+- **Lazy Loading**: Utilizado para carregamento de imagens
+
+### 5. UI/UX
+- **Pressable**: Adotado em vez de TouchableOpacity para melhor controle de interações
+- **Animated API**: Utilizada para animações suaves e feedback visual
+- **Modal**: Implementado para filtros por ser mais intuitivo em mobile
+
+### 6. Segurança
+- **Validação de Dados**: Implementada em todas as entradas de usuário
+- **Tratamento de Erros**: Estrutura robusta para lidar com falhas de API
+
+### 7. Escalabilidade
+- **Arquitetura Modular**: Facilita adição de novas features
+- **Componentes Reutilizáveis**: Reduz duplicação de código
+- **Interfaces Extensíveis**: Permite fácil expansão de funcionalidades
+
+### 8. Integração com APIs
+- **Axios**: Escolhido para requisições HTTP por sua simplicidade e recursos
+- **Cache**: Estratégia implementada para reduzir chamadas à API

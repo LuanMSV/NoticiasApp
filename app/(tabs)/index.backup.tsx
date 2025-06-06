@@ -89,7 +89,7 @@ export default function HomeScreen() {
       const response = await axios.get('https://newsapi.org/v2/top-headlines', {
         params: {
           country: 'us',
-          apiKey: apiKey,
+          apiKey: '361fa26158d34009985d94c489b0e97a',
           q: query,
         }
       });
@@ -104,13 +104,13 @@ export default function HomeScreen() {
 
   // Função para buscar notícias por categoria
   const getNewsByCategory = async (category: string) => {
-    const apiKey = process.env.EXPO_PUBLIC_API_KEY;
+      const apiKey = process.env.EXPO_PUBLIC_API_KEY;
     try {
       setLoading(true);
       const response = await axios.get('https://newsapi.org/v2/top-headlines', {
         params: {
           country: 'us',
-          apiKey: apiKey,
+          apiKey: '361fa26158d34009985d94c489b0e97a',
           category: category,
         }
       });
@@ -567,4 +567,4 @@ const styles = StyleSheet.create({
     padding: 8,
     marginRight: 8,
   },
-});
+}); 
